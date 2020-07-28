@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Item} from '../item';
-import {CartItem} from '../add-to-cart/cartitem';
-import {JsonPipe} from '@angular/common';
+import {CookieService} from 'ngx-cookie-service';
+
 
 @Component({
   selector: 'app-add-to-cart',
@@ -10,11 +10,11 @@ import {JsonPipe} from '@angular/common';
 })
 export class AddToCartComponent implements OnInit {
 
-  constructor() { }
+  constructor(private cookieService:CookieService) { }
 
   ngOnInit(): void {
   }
-  getItemsFromCart(){
-
+  updateCartItems(cartItems: Item[]){
+    this.cookieService.set('cart-items',JSON.stringify(cartItems),7);
   }
 }

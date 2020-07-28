@@ -3,8 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { Item } from '../item';
 import { ITEMS } from '../items-mock';
 import { Observable, of } from 'rxjs';
-import { switchMap } from 'rxjs/operators';
 import { AddToCartComponent } from '../add-to-cart/add-to-cart.component';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-all-categories',
@@ -12,11 +12,20 @@ import { AddToCartComponent } from '../add-to-cart/add-to-cart.component';
   styleUrls: ['./all-categories.component.css']
 })
 export class AllCategoriesComponent implements OnInit {
+  
   categoryId: number;
   items: Observable<Item[]>;
-  constructor(private route: ActivatedRoute) { }
+  initialItems:Item[];
+  constructor(private route: ActivatedRoute, 
+    private appComponent: AppComponent,
+    private cart:AddToCartComponent) { }
 
   ngOnInit(): void {
+    if(this.appComponent.items!=null){
+      this.initialItems=this.appComponent.items;
+    }else{
+      this.initialItems=ITEMS;
+    }
     this.route.paramMap.subscribe(params => {
       this.categoryId = Number(params.get("id"));
       this.items= this.populateItems(this.categoryId);
@@ -24,10 +33,10 @@ export class AllCategoriesComponent implements OnInit {
   }
   populateItems(id: number): Observable<Item[]> {
     if (id != 0) {
-      return of(ITEMS.filter(item => item.category === this.categoryId));
+      return of(this.initialItems.filter(item => item.category === this.categoryId));
     }
     else {
-      return of(ITEMS);
+      return of(this.initialItems);
     }
   }
   changeQuantity(items: Item[], itemId: number, delta: number): Item[] {
@@ -40,6 +49,7 @@ export class AllCategoriesComponent implements OnInit {
       }
       return item;
     });
+    this.cart.updateCartItems(outputItems);
     return outputItems;
   }
   increaseQuantity(itemId: number) {
