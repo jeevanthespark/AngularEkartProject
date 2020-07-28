@@ -3,4 +3,5 @@ export interface Item{
     name:string;
     category:number;
     price:number;
+    quantity:number;
 }

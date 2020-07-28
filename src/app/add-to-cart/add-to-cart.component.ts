@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import {Item} from '../item';
+import {CartItem} from '../add-to-cart/cartitem';
+import {JsonPipe} from '@angular/common';
 
 @Component({
   selector: 'app-add-to-cart',
@@ -11,5 +14,7 @@ export class AddToCartComponent implements OnInit {
 
   ngOnInit(): void {
   }
+  getItemsFromCart(){
 
+  }
 }

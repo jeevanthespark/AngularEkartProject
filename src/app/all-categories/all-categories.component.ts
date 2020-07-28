@@ -2,9 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Item } from '../item';
 import { ITEMS } from '../items-mock';
-import { Observable,of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
-import {CartItem} from '../add-to-cart/cartitem';
+import { AddToCartComponent } from '../add-to-cart/add-to-cart.component';
 
 @Component({
   selector: 'app-all-categories',
@@ -14,18 +14,15 @@ import {CartItem} from '../add-to-cart/cartitem';
 export class AllCategoriesComponent implements OnInit {
   categoryId: number;
   items: Observable<Item[]>;
-  cartItems:CartItem[];
   constructor(private route: ActivatedRoute) { }
-  
+
   ngOnInit(): void {
-    this.items=this.route.paramMap.pipe(
-      switchMap(params => {
-        this.categoryId = Number(params.get("id"));
-        return this.populateItems(this.categoryId);
-      })
-    );    
+    this.route.paramMap.subscribe(params => {
+      this.categoryId = Number(params.get("id"));
+      this.items= this.populateItems(this.categoryId);
+    });
   }
-  populateItems(id: number) : Observable<Item[]>{
+  populateItems(id: number): Observable<Item[]> {
     if (id != 0) {
       return of(ITEMS.filter(item => item.category === this.categoryId));
     }
@@ -33,11 +30,22 @@ export class AllCategoriesComponent implements OnInit {
       return of(ITEMS);
     }
   }
-  
-  increaseQuantity(item:Item){
-
+  changeQuantity(items: Item[], itemId: number, delta: number): Item[] {
+    let outputItems: Item[] = items.map(item => {
+      if (item.id === itemId) {
+        if (!((delta === -1) && (item.quantity === 0))) {
+          item.quantity = item.quantity + delta;
+          // console.log("Quantity increased to " + item.quantity + " for " + item.id);
+        }
+      }
+      return item;
+    });
+    return outputItems;
   }
-  decreaseQuantity(item:Item){
-
+  increaseQuantity(itemId: number) {
+    this.items.subscribe(items=> (this.items=of(this.changeQuantity(items, itemId, 1))));
+  }
+  decreaseQuantity(itemId: number) {
+    this.items.subscribe(items=> (this.items=of(this.changeQuantity(items, itemId, -1))));
   }
 }
