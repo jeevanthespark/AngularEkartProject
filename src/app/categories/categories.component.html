@@ -1,7 +1,7 @@
 <div>
     <mat-list *ngFor='let category of categories'>
         <mat-list-item>
-            <button mat-stroked-button [routerLink]="['/category',category.id]" style="width: 200px; background: white;">
+            <button mat-stroked-button [routerLink]="['/category',category.id]" class="button-custom" routerLinkActive="active">
                 {{category.name}}
             </button>
         </mat-list-item>
