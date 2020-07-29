@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { CookieService } from 'ngx-cookie-service';
 import { Item } from './item';
 
 @Component({
@@ -11,10 +10,10 @@ export class AppComponent implements OnInit {
   title = 'chocolate-factory';
   
   items: Item[];
-  constructor(private cookieService: CookieService) { }
+  constructor() { }
   ngOnInit() {
     try {
-      let cookieItems = this.cookieService.get('cart-items');
+      let cookieItems = localStorage.getItem('cart-items');
       if (cookieItems.length > 0) {
         this.items = JSON.parse(cookieItems);
       } else {

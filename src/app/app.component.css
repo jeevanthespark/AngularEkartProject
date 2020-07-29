@@ -1,0 +1,11 @@
+.example-container {
+    position: relative;
+    left: 0;
+    right: 0;
+    background: rgb(255, 255, 255);
+    height:100%;
+  }
+.side-nav-custom{
+    width: 200px;
+    background: rgb(202, 202, 202);
+}

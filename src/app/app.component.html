@@ -1,5 +1,13 @@
 <app-header></app-header>
 <!-- <app-home></app-home> -->
-<app-categories></app-categories>
+<mat-sidenav-container class="example-container" >
+    <mat-sidenav mode="side" opened class="side-nav-custom">
+        <app-categories></app-categories>
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 
-<router-outlet></router-outlet>
+
+

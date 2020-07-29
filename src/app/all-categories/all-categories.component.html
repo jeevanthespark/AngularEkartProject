@@ -1,10 +1,27 @@
 <div>
-    <ul>
-        <li *ngFor='let item of items | async'>
-            ProductID: {{item.id}}, ProductName: {{item.name}}, Price: {{item.price}}
-            <button (click)="increaseQuantity(item.id)">+</button>
-            <div *ngIf='item.quantity>0'>{{item.quantity}}</div>
-            <button (click)="decreaseQuantity(item.id)">-</button>
-        </li>
-    </ul>
+    <mat-grid-list cols="5" rowHeight="1:1" [gutterSize]="'10px'">
+        <mat-grid-tile *ngFor='let item of items | async'>
+            <mat-card class="mat-card-custom">
+                <mat-card-subtitle>{{item.name | uppercase}}</mat-card-subtitle>
+                <mat-card-content>
+                    <img mat-card-image src="../../assets/chocolates.jpg">
+                </mat-card-content>
+                <mat-card-actions style="text-align: center;">
+                    <button mat-icon-button (click)="increaseQuantity(item.id)">
+                        <mat-icon>add_circle_outline</mat-icon>
+                    </button>
+                    <span *ngIf='item.quantity>0'>{{item.quantity}} in Cart</span>
+                    <button mat-icon-button (click)="decreaseQuantity(item.id)">
+                        <mat-icon>remove_circle_outline</mat-icon>
+                    </button>
+                </mat-card-actions>
+            </mat-card>
+
+        </mat-grid-tile>
+
+    </mat-grid-list>
+    <br/>
+    <div style="text-align: center;">
+        <button mat-raised-button color="basic" routerLink="/cart">Add To Cart</button>
+    </div>
 </div>
