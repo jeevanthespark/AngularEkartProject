@@ -11,6 +11,7 @@ import {MatListModule} from '@angular/material/list';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
+import {MatFormFieldModule} from '@angular/material/form-field';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,6 +23,9 @@ import { AddToCartComponent } from './add-to-cart/add-to-cart.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { OrderNowComponent } from './order-now/order-now.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -38,6 +42,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     AppRoutingModule,
     FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatNativeDateModule,
     BrowserAnimationsModule,
     MatToolbarModule,
     MatIconModule,
@@ -47,9 +54,12 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     MatListModule,
     MatGridListModule,
     MatCardModule,
-    MatTableModule
+    MatTableModule,
+    MatRippleModule
   ],
-  providers: [CookieService, AddToCartComponent],
+  providers: [CookieService, AddToCartComponent,MatFormFieldModule,
+    MatInputModule,
+    { provide: MAT_FORM_FIELD_DEFAULT_OPTIONS, useValue: { appearance: 'fill' } },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
