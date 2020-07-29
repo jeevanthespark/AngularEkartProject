@@ -7,21 +7,26 @@
                     <img mat-card-image src="../../assets/chocolates.jpg">
                 </mat-card-content>
                 <mat-card-actions style="text-align: center;">
-                    <button mat-icon-button (click)="increaseQuantity(item.id)">
-                        <mat-icon>add_circle_outline</mat-icon>
+                    <button mat-raised-button (click)="increaseQuantity(item.id)" *ngIf='item.quantity==0'>
+                        <mat-icon>add_shopping_cart</mat-icon>Add To Cart
                     </button>
-                    <span *ngIf='item.quantity>0'>{{item.quantity}} in Cart</span>
-                    <button mat-icon-button (click)="decreaseQuantity(item.id)">
-                        <mat-icon>remove_circle_outline</mat-icon>
-                    </button>
+                    <span *ngIf='item.quantity>0'>
+                        <button mat-icon-button (click)="increaseQuantity(item.id)">
+                            <mat-icon>add_circle_outline</mat-icon>
+                        </button>
+                        <span *ngIf='item.quantity>0'>{{item.quantity}} in Cart</span>
+                        <button mat-icon-button (click)="decreaseQuantity(item.id)">
+                            <mat-icon>remove_circle_outline</mat-icon>
+                        </button>
+                    </span>
                 </mat-card-actions>
             </mat-card>
 
         </mat-grid-tile>
 
     </mat-grid-list>
-    <br/>
+    <br />
     <div style="text-align: center;">
-        <button mat-raised-button color="basic" routerLink="/cart">Add To Cart</button>
+        <button mat-raised-button color="basic" routerLink="/cart">Cart</button>
     </div>
 </div>

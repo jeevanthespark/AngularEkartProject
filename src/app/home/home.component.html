@@ -1,6 +1,13 @@
 <!-- <app-header></app-header>
 <app-categories></app-categories> -->
 <div>
-<div>{{title}}</div>
-<a routerLink="/category/0" >Order Online</a>
+    <mat-card style="text-align: center;">
+        <mat-card-title>
+            {{title}}
+        </mat-card-title>
+        <mat-card-actions>
+            <button mat-raised-button color="primary" routerLink="/category/0" >Order Online</button>
+        </mat-card-actions>
+    </mat-card>
+
 </div>

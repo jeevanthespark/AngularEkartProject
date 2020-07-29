@@ -1,4 +1,4 @@
-<div *ngIf='filteredCartItems.length>0' >
+<div *ngIf='(filteredCartItems!=null) && (filteredCartItems.length>0)' >
     <table mat-table [dataSource]="filteredCartItems" class="mat-elevation-z8" width="98%">
 
         <ng-container matColumnDef="Product Name">
@@ -32,9 +32,11 @@
         <h4>Total Price: {{this.totalPrice | currency}}</h4>
     </div><br/>
     <div style="text-align: center;">
+        <button mat-raised-button color="basic" (click)="clearCart()">Clear Cart</button>
+        <span class="spacer"></span>
         <button mat-raised-button color="basic" routerLink="/ordernow">Check Out Now</button>
     </div>
 </div>
-<div *ngIf='filteredCartItems.length==0' style="text-align: center;">
+<div *ngIf='(filteredCartItems==null) || (filteredCartItems.length==0)' style="text-align: center;">
     <h2>No Items In Cart</h2>
 </div>

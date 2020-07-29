@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Item} from '../item';
+import { Item } from '../item';
 
 @Component({
   selector: 'app-add-to-cart',
@@ -7,11 +7,11 @@ import {Item} from '../item';
   styleUrls: ['./add-to-cart.component.css']
 })
 export class AddToCartComponent implements OnInit {
-  cartItems:Item[];
-  filteredCartItems:Item[];
-  totalPrice:number;
-  displayedColumns:string[]=[
-    "Product Name","Quantity","Price"
+  cartItems: Item[];
+  filteredCartItems: Item[];
+  totalPrice: number;
+  displayedColumns: string[] = [
+    "Product Name", "Quantity", "Price"
   ];
   constructor() { }
 
@@ -24,19 +24,19 @@ export class AddToCartComponent implements OnInit {
         this.cartItems = null;
       }
       this.filterCartItems(this.cartItems);
-    }catch(e){
+    } catch (e) {
       // console.error(e);
     }
   }
-  filterCartItems(cartItems: Item[]){
-    this.filteredCartItems=cartItems.filter(item => item.quantity>0);
-    this.totalPrice=0;
-    this.filteredCartItems.forEach(item =>{       
-      this.totalPrice=this.totalPrice+(item.price*item.quantity)
+  filterCartItems(cartItems: Item[]) {
+    this.filteredCartItems = cartItems.filter(item => item.quantity > 0);
+    this.totalPrice = 0;
+    this.filteredCartItems.forEach(item => {
+      this.totalPrice = this.totalPrice + (item.price * item.quantity)
     });
   }
-  updateCartItems(cartItems: Item[]){
-    localStorage.setItem('cart-items',JSON.stringify(cartItems));
+  updateCartItems(cartItems: Item[]) {
+    localStorage.setItem('cart-items', JSON.stringify(cartItems));
   }
   changeQuantity(items: Item[], itemId: number, delta: number): Item[] {
     let outputItems: Item[] = items.map(item => {
@@ -57,5 +57,11 @@ export class AddToCartComponent implements OnInit {
   }
   decreaseQuantity(itemId: number) {
     this.changeQuantity(this.cartItems, itemId, -1);
+  }
+  clearCart() {
+    this.filterCartItems=null;
+    localStorage.removeItem('cart-items');
+    // window.alert("Cart Items Cleared");
+    window.location.reload()
   }
 }
