@@ -3,14 +3,14 @@
     <form (ngSubmit)="onSubmit()" #orderForm="ngForm">
         <div>Shipping Information</div>
 
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Name</mat-label>
             <input matInput type="text" id="name" required [(ngModel)]="shippingInfo.name" name="name" #name="ngModel"/>
             <div [hidden]="name.valid || name.pristine" >
                 Name is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Address</mat-label>
             <input matInput type="text" id="address1" required [(ngModel)]="shippingInfo.address1" name="address1"
                 #address1="ngModel">
@@ -18,19 +18,19 @@
                 Address is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label>Address</mat-label>
             <input matInput type="text" id="address2" [(ngModel)]="shippingInfo.address2" name="address2"
                 #address2="ngModel">
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >City</mat-label>
             <input matInput type="text" id="city" required [(ngModel)]="shippingInfo.city" name="city" #city="ngModel">
             <div [hidden]="city.valid || city.pristine">
                 City is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >State</mat-label>
             <input matInput type="text" id="state" required [(ngModel)]="shippingInfo.state" name="state"
                 #state="ngModel">
@@ -38,14 +38,14 @@
                 State is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Zip</mat-label>
             <input matInput type="number" id="zip" required [(ngModel)]="shippingInfo.zip" name="zip" #zip="ngModel">
             <div [hidden]="zip.valid || zip.pristine">
                 Zip is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Phone Number</mat-label>
             <input matInput type="number" id="phone" required [(ngModel)]="shippingInfo.phone" name="phone"
                 #phone="ngModel">
@@ -55,7 +55,7 @@
         </mat-form-field>
 
         <div>Billing Information</div>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Name</mat-label>
             <input matInput type="text" id="bname" required [(ngModel)]="billingInfo.name" name="bname"
                 #bname="ngModel">
@@ -63,7 +63,7 @@
                 Name is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Address</mat-label>
             <input matInput type="text" id="baddress1" required [(ngModel)]="billingInfo.address1" name="baddress1"
                 #baddress1="ngModel">
@@ -71,19 +71,19 @@
                 Address is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Address</mat-label>
             <input matInput type="text" id="baddress2" [(ngModel)]="billingInfo.address2" name="baddress2"
                 #baddress2="ngModel">
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >City</mat-label>
             <input matInput type="text" id="city" required [(ngModel)]="billingInfo.city" name="bcity" #bcity="ngModel">
             <div [hidden]="bcity.valid || bcity.pristine">
                 City is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >State</mat-label>
             <input matInput type="text" id="bstate" required [(ngModel)]="billingInfo.state" name="bstate"
                 #bstate="ngModel">
@@ -91,14 +91,14 @@
                 State is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Zip</mat-label>
             <input matInput type="number" id="bzip" required [(ngModel)]="billingInfo.zip" name="bzip" #bzip="ngModel">
             <div [hidden]="bzip.valid || bzip.pristine">
                 Zip is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Phone Number</mat-label>
             <input matInput type="number" id="bphone" required [(ngModel)]="billingInfo.phone" name="bphone"
                 #bphone="ngModel">
@@ -106,7 +106,7 @@
                 Phone is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Credit Card Type</mat-label>
             <select matNativeControl id="cardtype" required [(ngModel)]="billingInfo.creditcardtype" name="cardtype" #cardtype="ngModel">
                 <option *ngFor='let ctype of cardtypes' [value]="ctype">
@@ -117,7 +117,7 @@
                 Credit Card Type is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Credit Card Number</mat-label>
             <input matInput type="number" id="cardnumber" required [(ngModel)]="billingInfo.creditcardnumber"
                 name="cardnumber" #cardnumber="ngModel">
@@ -125,7 +125,7 @@
                 Credit Card Number is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Expiration Date</mat-label>
             <input matInput type="date" id="expdate" required [(ngModel)]="billingInfo.expirationdate" name="expdate"
                 #expdate="ngModel">
@@ -133,7 +133,7 @@
                 Expiration Date is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
+        <mat-form-field appearance="outline">
             <mat-label >Phone Number</mat-label>
             <input matInput type="number" id="seccode" required [(ngModel)]="billingInfo.securitycode" name="seccode"
                 #seccode="ngModel">
@@ -141,8 +141,8 @@
                 Security Code is required
             </div>
         </mat-form-field>
-        <mat-form-field appearance="fill">
-            <button type="submit" [disabled]="!orderForm.form.valid">Submit</button>
-        </mat-form-field>
+        <div style="text-align: center;">
+            <button mat-raised-button color="basic" type="submit" [disabled]="!orderForm.form.valid">Submit</button>
+        </div>
     </form>
 </div>
