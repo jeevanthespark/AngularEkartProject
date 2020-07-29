@@ -1,12 +1,25 @@
 <!-- <app-header></app-header>
 <app-categories></app-categories> -->
-<div>
+<div style="text-align: center;">
     <mat-card style="text-align: center;">
         <mat-card-title>
             {{title}}
         </mat-card-title>
+        <mat-card-content>
+            <mat-tab-group>
+                <mat-tab label="Milk Chocolates">
+                    <img mat-card-image src="../../assets/choc1.jpg" />
+                </mat-tab>
+                <mat-tab label="Dark Chocolates"> 
+                    <img mat-card-image src="../../assets/choc2.jpg" />
+                </mat-tab>
+                <mat-tab label="Nuts"> 
+                    <img mat-card-image src="../../assets/choc3.jfif" />
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
         <mat-card-actions>
-            <button mat-raised-button color="primary" routerLink="/category/0" >Order Online</button>
+            <button mat-raised-button color="primary" routerLink="/category/0">Order Online</button>
         </mat-card-actions>
     </mat-card>
 

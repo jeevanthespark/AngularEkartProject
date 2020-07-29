@@ -12,6 +12,11 @@ import {MatGridListModule} from '@angular/material/grid-list';
 import {MatCardModule} from '@angular/material/card';
 import {MatTableModule} from '@angular/material/table';
 import {MatFormFieldModule} from '@angular/material/form-field';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
+import {MatInputModule} from '@angular/material/input';
+import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -22,10 +27,7 @@ import { CategoriesComponent } from './categories/categories.component';
 import { AddToCartComponent } from './add-to-cart/add-to-cart.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { OrderNowComponent } from './order-now/order-now.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MAT_FORM_FIELD_DEFAULT_OPTIONS} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input';
-import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
+
 
 @NgModule({
   declarations: [
@@ -55,7 +57,8 @@ import {MatNativeDateModule, MatRippleModule} from '@angular/material/core';
     MatGridListModule,
     MatCardModule,
     MatTableModule,
-    MatRippleModule
+    MatRippleModule,
+    MatTabsModule
   ],
   providers: [CookieService, AddToCartComponent,MatFormFieldModule,
     MatInputModule,
