@@ -1,5 +1,266 @@
-/* You can add global styles to this file, and also import other style files */
-@import '@angular/material/prebuilt-themes/deeppurple-amber.css';
+/* Google Fonts - Modern Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&family=Nunito:wght@300;400;600;700;800&family=Space+Grotesk:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Tailwind CSS */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Global Styles */
+@layer base {
+  body {
+    @apply bg-gradient-to-br from-purple-900 via-violet-900 to-fuchsia-900 min-h-screen font-sans text-white;
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+  }
+
+  * {
+    @apply transition-all duration-300;
+  }
+
+  /* Skip navigation link - screen reader only by default */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .sr-only:focus {
+    position: static;
+    width: auto;
+    height: auto;
+    padding: 0;
+    margin: 0;
+    overflow: visible;
+    clip: auto;
+    white-space: normal;
+  }
+
+  /* High contrast focus indicators for accessibility */
+  a:focus-visible,
+  button:focus-visible,
+  input:focus-visible,
+  select:focus-visible,
+  textarea:focus-visible {
+    outline: 3px solid white;
+    outline-offset: 2px;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer components {
+
+  /* Glassmorphism Card */
+  .glass-card {
+    @apply bg-white/10 backdrop-blur-xl border border-white/20 rounded-3xl shadow-cyber;
+  }
+
+  .glass-card:hover {
+    @apply bg-white/15 border-white/30 shadow-neon transform scale-105;
+  }
+
+  /* Neon Button */
+  .btn-neon {
+    @apply relative px-8 py-4 rounded-full font-bold text-white overflow-hidden;
+    @apply bg-gradient-to-r from-neon-purple via-hot-pink to-vivid-purple;
+    @apply shadow-neon hover:shadow-neon-strong;
+    background-size: 200% 200%;
+    animation: gradient 3s ease infinite;
+  }
+
+  .btn-neon:hover {
+    @apply scale-110 rotate-2;
+  }
+
+  .btn-neon::before {
+    content: '';
+    @apply absolute inset-0 bg-shimmer;
+    animation: shimmer 2s infinite;
+  }
+
+  /* Gradient Text */
+  .gradient-text {
+    @apply bg-gradient-to-r from-bright-pink via-neon-purple to-electric-cyan bg-clip-text text-transparent;
+    animation: gradient 8s ease infinite;
+    background-size: 200% 200%;
+  }
+
+  .glow-text {
+    animation: glow 2s ease-in-out infinite alternate;
+  }
+
+  /* Animated Background */
+  .animated-bg {
+    @apply relative overflow-hidden;
+  }
+
+  .animated-bg::before {
+    content: '';
+    @apply absolute inset-0 opacity-20;
+    background: linear-gradient(45deg, #a855f7, #ec4899, #60a5fa, #22d3ee);
+    background-size: 400% 400%;
+    animation: gradient 10s ease infinite;
+    filter: blur(100px);
+  }
+
+  /* Shimmer Effect */
+  .shimmer {
+    @apply relative overflow-hidden;
+  }
+
+  .shimmer::after {
+    content: '';
+    @apply absolute inset-0 bg-shimmer;
+    animation: shimmer 3s infinite;
+  }
+
+  /* Product Card */
+  .product-card {
+    @apply glass-card p-6 animate-slide-up;
+  }
+
+  .product-card:hover {
+    @apply -translate-y-4;
+  }
+
+  /* Input Glow */
+  input:focus,
+  select:focus,
+  textarea:focus {
+    @apply outline-none ring-2 ring-neon-purple shadow-neon;
+  }
+
+  /* Shake Animation for Product Icons */
+  .shake-on-hover:hover {
+    animation: shake 0.6s ease-in-out;
+  }
+}
+
+/* Custom Animations */
+@keyframes gradient {
+
+  0%,
+  100% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+@keyframes glow {
+  from {
+    text-shadow: 0 0 10px #ec4899, 0 0 20px #ec4899, 0 0 30px #a855f7;
+  }
+
+  to {
+    text-shadow: 0 0 20px #ec4899, 0 0 30px #a855f7, 0 0 40px #a855f7;
+  }
+}
+
+/* Shake Animation */
+@keyframes shake {
+
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(0deg);
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translate(-3px, -3px) rotate(-3deg);
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translate(3px, 3px) rotate(3deg);
+  }
+}
+
+/* Star Sparkle Animation */
+@keyframes sparkle {
+
+  0%,
+  100% {
+    opacity: 0;
+    transform: scale(0) rotate(0deg);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1) rotate(180deg);
+  }
+}
+
+/* Star Sparkle Effect on Hover */
+.sparkle-on-hover {
+  position: relative;
+}
+
+.sparkle-on-hover .sparkle-1,
+.sparkle-on-hover .sparkle-2,
+.sparkle-on-hover .sparkle-3 {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+  font-size: 12px;
+  background: linear-gradient(45deg, #FBCFE8, #ffffff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.sparkle-on-hover:hover .sparkle-1 {
+  top: -12px;
+  left: 50%;
+  font-size: 14px;
+  animation: sparkle 0.7s ease-in-out 0.1s;
+}
+
+.sparkle-on-hover:hover .sparkle-2 {
+  top: 50%;
+  right: -15px;
+  font-size: 18px;
+  animation: sparkle 1s ease-in-out 0.05s;
+}
+
+.sparkle-on-hover:hover .sparkle-3 {
+  bottom: -10px;
+  left: -12px;
+  font-size: 16px;
+  animation: sparkle 0.85s ease-in-out 0.15s;
+}

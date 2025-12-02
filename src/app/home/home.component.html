@@ -1,26 +1,107 @@
-<!-- <app-header></app-header>
-<app-categories></app-categories> -->
-<div style="text-align: center;">
-    <mat-card style="text-align: center;">
-        <mat-card-title>
-            {{title}}
-        </mat-card-title>
-        <mat-card-content>
-            <mat-tab-group>
-                <mat-tab label="Milk Chocolates">
-                    <img mat-card-image src="../../assets/choc1.jpg" />
-                </mat-tab>
-                <mat-tab label="Dark Chocolates"> 
-                    <img mat-card-image src="../../assets/choc2.jpg" />
-                </mat-tab>
-                <mat-tab label="Nuts"> 
-                    <img mat-card-image src="../../assets/choc3.jfif" />
-                </mat-tab>
-            </mat-tab-group>
-        </mat-card-content>
-        <mat-card-actions>
-            <button mat-raised-button color="primary" routerLink="/category/0">Order Online</button>
-        </mat-card-actions>
-    </mat-card>
+<div id="home-container" class="container mx-auto px-4" style="font-family: 'Space Grotesk', 'Poppins', sans-serif;">
+    <!-- Hero Section -->
+    <section id="hero-section" class="glass-card p-8 sm:p-12 md:p-16 mb-12 text-center relative overflow-hidden"
+        aria-labelledby="hero-title">
+        <div id="hero-background" class="animated-bg" aria-hidden="true"></div>
+        <div id="hero-content" class="relative z-10">
+            <h1 id="hero-title"
+                class="text-4xl sm:text-6xl md:text-7xl lg:text-8xl font-bold gradient-text glow-text mb-6 drop-shadow-2xl animate-slide-up">
+                {{ title }}
+            </h1>
+            <p id="hero-subtitle"
+                class="text-lg sm:text-xl md:text-2xl lg:text-3xl mb-10 text-bright-pink/90 animate-fade-in"
+                style="animation-delay: 0.2s">
+                ✨ AI-Crafted Premium Chocolate Experiences ✨
+            </p>
+            <a id="hero-cta-btn" routerLink="/category/0" aria-label="Explore all chocolate products"
+                class="relative px-8 py-4 rounded-full font-bold text-white overflow-hidden bg-gradient-to-r from-neon-purple via-hot-pink to-vivid-purple shadow-neon hover:shadow-neon-strong hover:scale-110 transition-all duration-300 inline-block focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900">
+                <span class="relative z-10">🚀 Explore Dreamz</span>
+            </a>
+        </div>
 
+        <!-- Static Elements (no floating) -->
+        <div id="hero-deco-1" class="absolute top-10 left-10 text-4xl sm:text-5xl md:text-6xl opacity-20"
+            aria-hidden="true">🍫</div>
+        <div id="hero-deco-2" class="absolute top-20 right-20 text-3xl sm:text-4xl md:text-5xl opacity-30"
+            aria-hidden="true">✨</div>
+        <div id="hero-deco-3" class="absolute bottom-10 left-1/4 text-5xl sm:text-6xl md:text-7xl opacity-20"
+            aria-hidden="true">💜</div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section id="featured-categories-section" aria-labelledby="featured-categories-title">
+        <h2 id="featured-categories-title" class="sr-only">Featured Product Categories</h2>
+        <div id="featured-categories-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8 mb-12">
+            <article *ngFor="let cat of featuredCategories; let i = index" [id]="'featured-category-' + cat.id"
+                routerLink="/category/{{cat.id}}" [style.animation-delay]="(i * 0.15) + 's'"
+                [attr.aria-label]="'Browse ' + cat.title + ' category'"
+                class="product-card cursor-pointer group focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900"
+                tabindex="0" (keydown.enter)="navigateToCategory(cat.id)" (keydown.space)="navigateToCategory(cat.id)">
+                <div [id]="'featured-cat-image-' + cat.id"
+                    class="h-60 sm:h-72 md:h-80 relative overflow-hidden rounded-t-3xl bg-gradient-to-br {{cat.gradient}}">
+                    <!-- Icon at top with padding, not centered -->
+                    <div [id]="'featured-cat-icon-container-' + cat.id"
+                        class="absolute top-0 left-0 right-0 pt-10 flex justify-center">
+                        <div
+                            class="shake-on-hover sparkle-on-hover group-hover:scale-125 transition-transform duration-500">
+                            <span [id]="'featured-cat-icon-' + cat.id"
+                                class="text-6xl sm:text-7xl md:text-8xl lg:text-9xl" role="img"
+                                [attr.aria-label]="cat.title + ' category icon'">{{cat.icon}}</span>
+                            <span class="sparkle-1" aria-hidden="true">✦</span>
+                            <span class="sparkle-2" aria-hidden="true">✦</span>
+                            <span class="sparkle-3" aria-hidden="true">✦</span>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" aria-hidden="true">
+                    </div>
+                    <div [id]="'featured-cat-overlay-' + cat.id" class="absolute bottom-6 left-6 z-10">
+                        <h3 [id]="'featured-cat-title-' + cat.id"
+                            class="text-2xl sm:text-3xl font-bold text-white mb-2 glow-text">{{cat.title}}</h3>
+                        <p [id]="'featured-cat-subtitle-' + cat.id" class="text-sm sm:text-base text-bright-pink">
+                            {{cat.subtitle}}</p>
+                    </div>
+                </div>
+                <div [id]="'featured-cat-details-' + cat.id" class="p-4 sm:p-6 group-hover:bg-white/15 transition-all">
+                    <p [id]="'featured-cat-desc-' + cat.id" class="text-sm sm:text-base text-white/80">
+                        {{cat.description}}</p>
+                    <div [id]="'featured-cat-link-' + cat.id"
+                        class="mt-4 flex items-center text-hot-pink group-hover:translate-x-2 transition-transform">
+                        <span class="font-semibold text-sm sm:text-base">Discover {{cat.title}}</span>
+                        <svg class="w-4 h-4 sm:w-5 sm:h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7">
+                            </path>
+                        </svg>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats-section" aria-labelledby="stats-title"
+        class="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 animate-fade-in" style="animation-delay: 0.6s">
+        <h2 id="stats-title" class="sr-only">Our Quality Metrics</h2>
+        <div id="stat-ai-perfect" class="glass-card p-4 sm:p-6 text-center group hover:scale-110 transition-all">
+            <div id="stat-ai-icon" class="text-4xl sm:text-5xl mb-3" role="img" aria-label="Target emoji">🎯</div>
+            <div id="stat-ai-value" class="text-2xl sm:text-3xl font-bold gradient-text">100%</div>
+            <div id="stat-ai-label" class="text-xs sm:text-sm text-white/70">AI-Perfect</div>
+        </div>
+        <div id="stat-delivery" class="glass-card p-4 sm:p-6 text-center group hover:scale-110 transition-all">
+            <div id="stat-delivery-icon" class="text-4xl sm:text-5xl mb-3" role="img" aria-label="Lightning emoji">⚡
+            </div>
+            <div id="stat-delivery-value" class="text-2xl sm:text-3xl font-bold gradient-text">24/7</div>
+            <div id="stat-delivery-label" class="text-xs sm:text-sm text-white/70">Dream Delivery</div>
+        </div>
+        <div id="stat-quality" class="glass-card p-4 sm:p-6 text-center group hover:scale-110 transition-all">
+            <div id="stat-quality-icon" class="text-4xl sm:text-5xl mb-3" role="img" aria-label="Diamond emoji">💎</div>
+            <div id="stat-quality-value" class="text-2xl sm:text-3xl font-bold gradient-text">Premium</div>
+            <div id="stat-quality-label" class="text-xs sm:text-sm text-white/70">Quality</div>
+        </div>
+        <div id="stat-dreamers" class="glass-card p-4 sm:p-6 text-center group hover:scale-110 transition-all">
+            <div id="stat-dreamers-icon" class="text-4xl sm:text-5xl mb-3" role="img" aria-label="Star emoji">🌟</div>
+            <div id="stat-dreamers-value" class="text-2xl sm:text-3xl font-bold gradient-text">5000+</div>
+            <div id="stat-dreamers-label" class="text-xs sm:text-sm text-white/70">Happy Dreamers</div>
+        </div>
+    </section>
 </div>

@@ -1,148 +1,170 @@
-<div>
-    <h1>Payment Details</h1>
-    <form (ngSubmit)="onSubmit()" #orderForm="ngForm">
-        <div>Shipping Information</div>
+<div id="checkout-container" class="container mx-auto px-4 max-w-5xl"
+    style="font-family: 'Space Grotesk', 'Poppins', sans-serif;">
+    <h1 id="checkout-title"
+        class="text-5xl font-display font-bold gradient-text glow-text mb-12 animate-slide-up text-center">Complete Your
+        Dream</h1>
 
-        <mat-form-field appearance="outline">
-            <mat-label>Name</mat-label>
-            <input matInput type="text" id="name" required [(ngModel)]="shippingInfo.name" name="name" #name="ngModel"/>
-            <div [hidden]="name.valid || name.pristine" >
-                Name is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Address</mat-label>
-            <input matInput type="text" id="address1" required [(ngModel)]="shippingInfo.address1" name="address1"
-                #address1="ngModel">
-            <div [hidden]="address1.valid || address1.pristine">
-                Address is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label>Address</mat-label>
-            <input matInput type="text" id="address2" [(ngModel)]="shippingInfo.address2" name="address2"
-                #address2="ngModel">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >City</mat-label>
-            <input matInput type="text" id="city" required [(ngModel)]="shippingInfo.city" name="city" #city="ngModel">
-            <div [hidden]="city.valid || city.pristine">
-                City is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >State</mat-label>
-            <input matInput type="text" id="state" required [(ngModel)]="shippingInfo.state" name="state"
-                #state="ngModel">
-            <div [hidden]="state.valid || state.pristine">
-                State is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >Zip</mat-label>
-            <input matInput type="number" id="zip" required [(ngModel)]="shippingInfo.zip" name="zip" #zip="ngModel">
-            <div [hidden]="zip.valid || zip.pristine">
-                Zip is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >Phone Number</mat-label>
-            <input matInput type="number" id="phone" required [(ngModel)]="shippingInfo.phone" name="phone"
-                #phone="ngModel">
-            <div [hidden]="phone.valid || phone.pristine">
-                Phone is required
-            </div>
-        </mat-form-field>
+    <form id="checkout-form" (ngSubmit)="onSubmit()" #orderForm="ngForm" class="space-y-8" aria-label="Checkout form">
+        <!-- Shipping Information -->
+        <fieldset id="shipping-section" class="glass-card p-10 animate-scale-in">
+            <legend id="shipping-title" class="text-3xl font-bold gradient-text mb-8 flex items-center">
+                <span id="shipping-icon" class="text-5xl mr-4" role="img" aria-label="Delivery truck emoji">🚚</span>
+                <span>Dream Delivery</span>
+            </legend>
 
-        <div>Billing Information</div>
-        <mat-form-field appearance="outline">
-            <mat-label >Name</mat-label>
-            <input matInput type="text" id="bname" required [(ngModel)]="billingInfo.name" name="bname"
-                #bname="ngModel">
-            <div [hidden]="bname.valid || bname.pristine">
-                Name is required
+            <div id="shipping-fields" class="grid md:grid-cols-2 gap-6">
+                <div class="space-y-2">
+                    <label for="ship-name" class="block text-sm font-semibold text-bright-pink">Name *</label>
+                    <input id="ship-name" type="text" [(ngModel)]="shippingInfo.name" name="name" #name="ngModel"
+                        required autocomplete="name" [attr.aria-invalid]="name.invalid && name.touched"
+                        [attr.aria-describedby]="name.invalid && name.touched ? 'ship-name-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white placeholder-white/50 transition-all hover:bg-white/15">
+                    <p *ngIf="name.invalid && name.touched" id="ship-name-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ Name is required</p>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="ship-phone" class="block text-sm font-semibold text-bright-pink">Phone *</label>
+                    <input id="ship-phone" type="tel" [(ngModel)]="shippingInfo.phone" name="phone" #phone="ngModel"
+                        required autocomplete="tel" [attr.aria-invalid]="phone.invalid && phone.touched"
+                        [attr.aria-describedby]="phone.invalid && phone.touched ? 'ship-phone-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white placeholder-white/50 transition-all hover:bg-white/15">
+                    <p *ngIf="phone.invalid && phone.touched" id="ship-phone-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ Phone is required</p>
+                </div>
+
+                <div class="md:col-span-2 space-y-2">
+                    <label for="ship-address1" class="block text-sm font-semibold text-bright-pink">Address Line 1
+                        *</label>
+                    <input id="ship-address1" type="text" [(ngModel)]="shippingInfo.address1" name="address1"
+                        #address1="ngModel" required autocomplete="address-line1"
+                        [attr.aria-invalid]="address1.invalid && address1.touched"
+                        [attr.aria-describedby]="address1.invalid && address1.touched ? 'ship-address1-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white placeholder-white/50 transition-all hover:bg-white/15">
+                    <p *ngIf="address1.invalid && address1.touched" id="ship-address1-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ Address is required</p>
+                </div>
+
+                <div class="md:col-span-2 space-y-2">
+                    <label for="ship-address2" class="block text-sm font-semibold text-bright-pink">Address Line
+                        2</label>
+                    <input id="ship-address2" type="text" [(ngModel)]="shippingInfo.address2" name="address2"
+                        autocomplete="address-line2"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white placeholder-white/50 transition-all hover:bg-white/15">
+                </div>
+
+                <div class="space-y-2">
+                    <label for="ship-city" class="block text-sm font-semibold text-bright-pink">City *</label>
+                    <input id="ship-city" type="text" [(ngModel)]="shippingInfo.city" name="city" #city="ngModel"
+                        required autocomplete="address-level2" [attr.aria-invalid]="city.invalid && city.touched"
+                        [attr.aria-describedby]="city.invalid && city.touched ? 'ship-city-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white placeholder-white/50 transition-all hover:bg-white/15">
+                    <p *ngIf="city.invalid && city.touched" id="ship-city-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ City is required</p>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="ship-state" class="block text-sm font-semibold text-bright-pink">State *</label>
+                    <input id="ship-state" type="text" [(ngModel)]="shippingInfo.state" name="state" #state="ngModel"
+                        required autocomplete="address-level1" [attr.aria-invalid]="state.invalid && state.touched"
+                        [attr.aria-describedby]="state.invalid && state.touched ? 'ship-state-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white placeholder-white/50 transition-all hover:bg-white/15">
+                    <p *ngIf="state.invalid && state.touched" id="ship-state-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ State is required</p>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="ship-zip" class="block text-sm font-semibold text-bright-pink">ZIP Code *</label>
+                    <input id="ship-zip" type="text" [(ngModel)]="shippingInfo.zip" name="zip" #zip="ngModel" required
+                        autocomplete="postal-code" [attr.aria-invalid]="zip.invalid && zip.touched"
+                        [attr.aria-describedby]="zip.invalid && zip.touched ? 'ship-zip-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white placeholder-white/50 transition-all hover:bg-white/15">
+                    <p *ngIf="zip.invalid && zip.touched" id="ship-zip-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ ZIP is required</p>
+                </div>
             </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >Address</mat-label>
-            <input matInput type="text" id="baddress1" required [(ngModel)]="billingInfo.address1" name="baddress1"
-                #baddress1="ngModel">
-            <div [hidden]="baddress1.valid || baddress1.pristine">
-                Address is required
+        </fieldset>
+
+        <!-- Billing Information -->
+        <fieldset id="billing-section" class="glass-card p-10 animate-scale-in" style="animation-delay: 0.1s">
+            <legend id="billing-title" class="text-3xl font-bold gradient-text mb-8 flex items-center">
+                <span id="billing-icon" class="text-5xl mr-4" role="img" aria-label="Credit card emoji">💳</span>
+                <span>Dream Payment</span>
+            </legend>
+
+            <div id="billing-fields" class="grid md:grid-cols-2 gap-6">
+                <div class="md:col-span-2 space-y-2">
+                    <label for="bill-name" class="block text-sm font-semibold text-bright-pink">Name on Card *</label>
+                    <input id="bill-name" type="text" [(ngModel)]="billingInfo.name" name="bname" #bname="ngModel"
+                        required autocomplete="cc-name" [attr.aria-invalid]="bname.invalid && bname.touched"
+                        [attr.aria-describedby]="bname.invalid && bname.touched ? 'bill-name-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white placeholder-white/50 transition-all hover:bg-white/15">
+                    <p *ngIf="bname.invalid && bname.touched" id="bill-name-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ Name is required</p>
+                </div>
+
+                <div class="md:col-span-2 space-y-2">
+                    <label for="bill-cardtype" class="block text-sm font-semibold text-bright-pink">Card Type *</label>
+                    <select id="bill-cardtype" [(ngModel)]="billingInfo.creditcardtype" name="cardtype"
+                        #cardtype="ngModel" required [attr.aria-invalid]="cardtype.invalid && cardtype.touched"
+                        [attr.aria-describedby]="cardtype.invalid && cardtype.touched ? 'bill-cardtype-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white transition-all hover:bg-white/15">
+                        <option value="" class="bg-purple-900">Select card type</option>
+                        <option *ngFor="let ctype of cardtypes" [value]="ctype" class="bg-purple-900">{{ ctype }}
+                        </option>
+                    </select>
+                    <p *ngIf="cardtype.invalid && cardtype.touched" id="bill-cardtype-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ Card type is required</p>
+                </div>
+
+                <div class="md:col-span-2 space-y-2">
+                    <label for="bill-cardnumber" class="block text-sm font-semibold text-bright-pink">Card Number
+                        *</label>
+                    <input id="bill-cardnumber" type="text" [(ngModel)]="billingInfo.creditcardnumber" name="cardnumber"
+                        #cardnumber="ngModel" required autocomplete="cc-number"
+                        [attr.aria-invalid]="cardnumber.invalid && cardnumber.touched"
+                        [attr.aria-describedby]="cardnumber.invalid && cardnumber.touched ? 'bill-cardnumber-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white placeholder-white/50 transition-all hover:bg-white/15">
+                    <p *ngIf="cardnumber.invalid && cardnumber.touched" id="bill-cardnumber-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ Card number is required</p>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="bill-expdate" class="block text-sm font-semibold text-bright-pink">Expiration Date
+                        *</label>
+                    <input id="bill-expdate" type="month" [(ngModel)]="billingInfo.expirationdate" name="expdate"
+                        #expdate="ngModel" required autocomplete="cc-exp"
+                        [attr.aria-invalid]="expdate.invalid && expdate.touched"
+                        [attr.aria-describedby]="expdate.invalid && expdate.touched ? 'bill-expdate-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white transition-all hover:bg-white/15">
+                    <p *ngIf="expdate.invalid && expdate.touched" id="bill-expdate-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ Expiration date is required</p>
+                </div>
+
+                <div class="space-y-2">
+                    <label for="bill-cvv" class="block text-sm font-semibold text-bright-pink">CVV *</label>
+                    <input id="bill-cvv" type="text" [(ngModel)]="billingInfo.securitycode" name="seccode"
+                        #seccode="ngModel" required maxlength="4" autocomplete="cc-csc"
+                        [attr.aria-invalid]="seccode.invalid && seccode.touched"
+                        [attr.aria-describedby]="seccode.invalid && seccode.touched ? 'bill-cvv-error' : null"
+                        class="w-full px-6 py-4 bg-white/10 border-2 border-white/20 rounded-2xl focus:border-neon-purple focus:ring-2 focus:ring-neon-purple/50 text-white placeholder-white/50 transition-all hover:bg-white/15">
+                    <p *ngIf="seccode.invalid && seccode.touched" id="bill-cvv-error"
+                        class="text-hot-pink text-sm animate-shake" role="alert">✦ CVV is required</p>
+                </div>
             </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >Address</mat-label>
-            <input matInput type="text" id="baddress2" [(ngModel)]="billingInfo.address2" name="baddress2"
-                #baddress2="ngModel">
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >City</mat-label>
-            <input matInput type="text" id="city" required [(ngModel)]="billingInfo.city" name="bcity" #bcity="ngModel">
-            <div [hidden]="bcity.valid || bcity.pristine">
-                City is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >State</mat-label>
-            <input matInput type="text" id="bstate" required [(ngModel)]="billingInfo.state" name="bstate"
-                #bstate="ngModel">
-            <div [hidden]="bstate.valid || bstate.pristine">
-                State is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >Zip</mat-label>
-            <input matInput type="number" id="bzip" required [(ngModel)]="billingInfo.zip" name="bzip" #bzip="ngModel">
-            <div [hidden]="bzip.valid || bzip.pristine">
-                Zip is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >Phone Number</mat-label>
-            <input matInput type="number" id="bphone" required [(ngModel)]="billingInfo.phone" name="bphone"
-                #bphone="ngModel">
-            <div [hidden]="bphone.valid || bphone.pristine">
-                Phone is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >Credit Card Type</mat-label>
-            <select matNativeControl id="cardtype" required [(ngModel)]="billingInfo.creditcardtype" name="cardtype" #cardtype="ngModel">
-                <option *ngFor='let ctype of cardtypes' [value]="ctype">
-                    {{ctype}}
-                </option>
-            </select>
-            <div [hidden]="cardtype.valid || cardtype.pristine">
-                Credit Card Type is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >Credit Card Number</mat-label>
-            <input matInput type="number" id="cardnumber" required [(ngModel)]="billingInfo.creditcardnumber"
-                name="cardnumber" #cardnumber="ngModel">
-            <div [hidden]="cardnumber.valid || cardnumber.pristine">
-                Credit Card Number is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >Expiration Date</mat-label>
-            <input matInput type="date" id="expdate" required [(ngModel)]="billingInfo.expirationdate" name="expdate"
-                #expdate="ngModel">
-            <div [hidden]="expdate.valid || expdate.pristine">
-                Expiration Date is required
-            </div>
-        </mat-form-field>
-        <mat-form-field appearance="outline">
-            <mat-label >Phone Number</mat-label>
-            <input matInput type="number" id="seccode" required [(ngModel)]="billingInfo.securitycode" name="seccode"
-                #seccode="ngModel">
-            <div [hidden]="seccode.valid || seccode.pristine">
-                Security Code is required
-            </div>
-        </mat-form-field>
-        <div style="text-align: center;">
-            <button mat-raised-button color="basic" type="submit" [disabled]="!orderForm.form.valid">Submit</button>
+        </fieldset>
+
+        <!-- Submit Button -->
+        <div id="submit-section" class="text-center animate-fade-in" style="animation-delay: 0.2s">
+            <button id="submit-order-btn" type="submit" [disabled]="!orderForm.form.valid"
+                [attr.aria-label]="orderForm.form.valid ? 'Place your order' : 'Complete all required fields to place order'"
+                [class]="orderForm.form.valid ? 'btn-neon text-xl px-16 py-6' : 'glass-card px-16 py-6 rounded-full text-lg font-bold text-white/50 cursor-not-allowed'">
+                <span class="relative z-10 flex items-center justify-center space-x-3">
+                    <span role="img" aria-label="Sparkles" aria-hidden="true">✨</span>
+                    <span>Place Dream Order</span>
+                    <span role="img" aria-label="Star" aria-hidden="true">🌟</span>
+                </span>
+            </button>
         </div>
     </form>
 </div>

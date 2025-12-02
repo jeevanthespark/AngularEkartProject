@@ -1,13 +1,22 @@
-<app-header></app-header>
-<!-- <app-home></app-home> -->
-<mat-sidenav-container class="example-container" >
-    <mat-sidenav mode="side" opened class="side-nav-custom">
-        <app-categories></app-categories>
-    </mat-sidenav>
-    <mat-sidenav-content>
-        <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
+<app-header id="app-header" (sidebarToggle)="toggleSidebar()"></app-header>
 
+<div id="app-layout" class="flex" style="font-family: 'Space Grotesk', 'Poppins', sans-serif;">
+    <!-- Sidebar for categories - NO white background -->
+    <aside id="app-sidebar" [class]="isSidebarOpen ? 'translate-x-0' : '-translate-x-full'"
+        [attr.aria-hidden]="!isSidebarOpen"
+        class="fixed md:static md:translate-x-0 top-16 left-0 h-[calc(100vh-4rem)] w-64 transition-transform duration-300 ease-in-out z-40 overflow-y-auto"
+        role="navigation" aria-label="Product categories">
+        <app-categories id="app-categories"></app-categories>
+    </aside>
 
+    <!-- Overlay for mobile -->
+    <div id="sidebar-overlay" *ngIf="isSidebarOpen" (click)="toggleSidebar()"
+        class="fixed inset-0 bg-black/50 z-30 md:hidden top-16" aria-label="Close navigation menu" role="button"
+        tabindex="0" (keydown.enter)="toggleSidebar()" (keydown.space)="toggleSidebar()">
+    </div>
 
+    <!-- Main content -->
+    <main id="main-content" class="flex-1 p-4 md:p-8 min-h-[calc(100vh-4rem)]" role="main">
+        <router-outlet id="router-content"></router-outlet>
+    </main>
+</div>

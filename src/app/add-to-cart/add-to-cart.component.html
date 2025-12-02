@@ -1,42 +1,114 @@
-<div *ngIf='(filteredCartItems!=null) && (filteredCartItems.length>0)' >
-    <table mat-table [dataSource]="filteredCartItems" class="mat-elevation-z8" width="98%">
+<div id="cart-container" class="container mx-auto px-4">
+    <h2 id="cart-title"
+        class="text-5xl font-display font-bold gradient-text glow-text mb-12 animate-slide-up text-center">Your Dream
+        Cart</h2>
 
-        <ng-container matColumnDef="Product Name">
-            <th mat-header-cell *matHeaderCellDef> Product Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.name | uppercase}} </td>
-        </ng-container>
+    <!-- Cart Items -->
+    <div id="cart-items-list" *ngIf="filteredCartItems && filteredCartItems.length > 0"
+        class="space-y-8 animate-fade-in">
+        <div *ngFor="let item of filteredCartItems; let i = index" [id]="'cart-item-' + item.id"
+            [style.animation-delay]="(i * 0.1) + 's'"
+            class="glass-card p-8 animate-slide-up hover:scale-105 transition-all">
+            <div class="flex flex-col md:flex-row items-center gap-8">
+                <!-- Product Icon -->
+                <div [id]="'cart-item-icon-container-' + item.id"
+                    class="h-32 w-32 rounded-3xl bg-gradient-to-br {{getGradient(item.category)}} flex items-center justify-center shadow-neon">
+                    <div [id]="'cart-item-icon-' + item.id" class="text-7xl">
+                        {{ getEmoji(item.category) }}
+                    </div>
+                </div>
 
-        <ng-container matColumnDef="Quantity">
-            <th mat-header-cell *matHeaderCellDef> Quantity </th>
-            <td mat-cell *matCellDef="let element"> 
-                <button mat-icon-button (click)="increaseQuantity(element.id)">
-                    <mat-icon>add_circle_outline</mat-icon>
-                </button>
-                {{element.quantity}} 
-                <button mat-icon-button (click)="decreaseQuantity(element.id)">
-                    <mat-icon>remove_circle_outline</mat-icon>
-                </button>
-            </td>
-        </ng-container>
+                <!-- Product Info -->
+                <div [id]="'cart-item-info-' + item.id" class="flex-1 text-center md:text-left">
+                    <h3 [id]="'cart-item-name-' + item.id" class="text-3xl font-bold gradient-text glow-text mb-2">{{
+                        item.name | uppercase }}</h3>
+                    <p [id]="'cart-item-price-' + item.id" class="text-bright-pink text-lg">{{ item.price | currency }}
+                        each</p>
+                </div>
 
-        <ng-container matColumnDef="Price">
-            <th mat-header-cell *matHeaderCellDef> Price </th>
-            <td mat-cell *matCellDef="let element"> {{(element.price*element.quantity) | currency}} </td>
-        </ng-container>
+                <!-- Quantity Controls -->
+                <div [id]="'cart-item-qty-controls-' + item.id" class="glass-card p-6 flex items-center space-x-6">
+                    <button [id]="'cart-decrease-btn-' + item.id" (click)="decreaseQuantity(item.id)"
+                        aria-label="Decrease quantity"
+                        class="w-14 h-14 rounded-full bg-gradient-to-r from-vivid-purple to-deep-purple text-white transition-all duration-200 flex items-center justify-center font-bold text-3xl hover:scale-125 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900"
+                        style="box-shadow: 0 0 20px rgba(232, 121, 249, 0.3); transition: box-shadow 0.3s ease;">
+                        −
+                    </button>
+                    <div class="text-center min-w-[80px]">
+                        <div [id]="'cart-item-qty-' + item.id" class="text-4xl font-bold gradient-text">{{ item.quantity
+                            }}</div>
+                        <div class="text-xs text-bright-pink">items</div>
+                    </div>
+                    <button [id]="'cart-increase-btn-' + item.id" (click)="increaseQuantity(item.id)"
+                        aria-label="Increase quantity"
+                        class="w-14 h-14 rounded-full bg-gradient-to-r from-hot-pink to-bright-pink text-white transition-all duration-200 flex items-center justify-center font-bold text-3xl hover:scale-125 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900"
+                        style="box-shadow: 0 0 20px rgba(251, 146, 235, 0.3); transition: box-shadow 0.3s ease;">
+                        +
+                    </button>
+                </div>
 
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-    <br/><br/>
-    <div style="text-align: center;">
-        <h4>Total Price: {{this.totalPrice | currency}}</h4>
-    </div><br/>
-    <div style="text-align: center;">
-        <button mat-raised-button color="basic" (click)="clearCart()">Clear Cart</button>
-        <span class="spacer"></span>
-        <button mat-raised-button color="basic" routerLink="/ordernow">Check Out Now</button>
+                <!-- Price -->
+                <div [id]="'cart-item-total-' + item.id" class="text-center min-w-[150px]">
+                    <div class="text-5xl font-bold text-bright-pink animate-pulse-slow">
+                        {{ (item.price * item.quantity) | currency }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Total and Actions -->
+        <div id="cart-summary" class="glass-card p-10 animate-scale-in">
+            <div id="cart-summary-header" class="flex flex-col md:flex-row justify-between items-center mb-8 gap-6">
+                <div id="cart-total-section">
+                    <div id="cart-total-label" class="text-sm text-bright-pink mb-2">Total Dream Value</div>
+                    <div id="cart-total-price" class="text-6xl font-bold text-pink-300 glow-text">{{ totalPrice |
+                        currency }}</div>
+                </div>
+
+                <div id="cart-actions" class="flex flex-col sm:flex-row gap-4">
+                    <button id="clear-cart-btn" (click)="clearCart()"
+                        class="glass-card px-8 py-4 rounded-full font-semibold text-white hover:bg-white/20 transition-all hover:scale-110">
+                        Clear Dreamz
+                    </button>
+                    <button id="checkout-btn" routerLink="/ordernow" class="btn-neon text-lg px-12 py-4">
+                        <span class="relative z-10">🚀 Checkout Now</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Benefits -->
+            <div id="cart-benefits" class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-8 pt-8 border-t border-white/20">
+                <div id="benefit-delivery" class="text-center group">
+                    <div class="text-4xl mb-2">🎁</div>
+                    <div class="text-bright-pink font-semibold">Free AI Delivery</div>
+                    <div class="text-xs text-white/60">On all orders</div>
+                </div>
+                <div id="benefit-quality" class="text-center group">
+                    <div class="text-4xl mb-2">💎</div>
+                    <div class="text-bright-pink font-semibold">Premium Quality</div>
+                    <div class="text-xs text-white/60">Guaranteed</div>
+                </div>
+                <div id="benefit-instant" class="text-center group">
+                    <div class="text-4xl mb-2">⚡</div>
+                    <div class="text-bright-pink font-semibold">Instant Dreamz</div>
+                    <div class="text-xs text-white/60">Same-day delivery</div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-<div *ngIf='(filteredCartItems==null) || (filteredCartItems.length==0)' style="text-align: center;">
-    <h2>No Items In Cart</h2>
+
+    <!-- Empty Cart -->
+    <div id="empty-cart" *ngIf="!filteredCartItems || filteredCartItems.length === 0"
+        class="text-center py-20 animate-fade-in">
+        <div id="empty-cart-card" class="glass-card p-16 inline-block">
+            <div id="empty-cart-icon" class="text-9xl mb-8 animate-bounce-slow">🛒</div>
+            <h3 id="empty-cart-title" class="text-4xl font-display font-bold gradient-text glow-text mb-4">Your Cart is
+                Empty</h3>
+            <p id="empty-cart-message" class="text-bright-pink/80 mb-10 text-lg">Start creating your chocolate dreams!
+            </p>
+            <button id="empty-cart-explore-btn" routerLink="/category/0" class="btn-neon text-lg px-12 py-4">
+                <span class="relative z-10">✨ Explore Dreamz ✨</span>
+            </button>
+        </div>
+    </div>
 </div>

@@ -1,9 +1,28 @@
-<div>
-    <mat-list *ngFor='let category of categories'>
-        <mat-list-item>
-            <button mat-stroked-button [routerLink]="['/category',category.id]" class="button-custom" routerLinkActive="active">
-                {{category.name}}
-            </button>
-        </mat-list-item>
-    </mat-list>
+<div class="p-8 m-4 animate-fade-in rounded-3xl" id="categories-sidebar" role="navigation"
+    aria-label="Product categories navigation"
+    style="background: linear-gradient(135deg, rgba(126, 58, 237, 0.95) 0%, rgba(147, 51, 234, 0.95) 50%, rgba(236, 72, 153, 0.95) 100%); backdrop-filter: blur(20px); font-family: 'Space Grotesk', 'Poppins', sans-serif;">
+    <h2 id="sidebar-title" class="text-3xl font-bold text-white mb-6 animate-slide-up text-left">Categories</h2>
+    <nav class="space-y-3" id="categories-nav">
+        <a *ngFor="let category of categories; let i = index" [id]="'category-link-' + category.id"
+            [routerLink]="['/category', category.id]" routerLinkActive="bg-white/30 shadow-neon"
+            [style.animation-delay]="(i * 0.1) + 's'" [attr.aria-label]="'View ' + category.name + ' products'"
+            class="sparkle-on-hover flex items-center px-6 py-4 rounded-2xl hover:bg-white/20 transition-all duration-300 font-semibold text-white hover:text-white cursor-pointer group animate-slide-up relative overflow-hidden gap-4 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900"
+            style="justify-content: flex-start; text-align: left;">
+
+            <!-- Emoji Icon Span (separate) -->
+            <span class="text-5xl flex-shrink-0" role="img" [attr.aria-label]="category.emoji">{{ category.emoji
+                }}</span>
+
+            <!-- Category Text Span (separate) -->
+            <span class="sparkle-on-hover relative text-white text-lg text-left flex-1">
+                {{ category.name }}
+                <span class="sparkle-1" aria-hidden="true">✦</span>
+                <span class="sparkle-2" aria-hidden="true">✦</span>
+                <span class="sparkle-3" aria-hidden="true">✦</span>
+            </span>
+
+            <div class="absolute inset-0 bg-shimmer opacity-0 group-hover:opacity-100 transition-opacity"
+                aria-hidden="true"></div>
+        </a>
+    </nav>
 </div>

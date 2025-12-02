@@ -1,32 +1,96 @@
-<div>
-    <mat-grid-list cols="5" rowHeight="1:1" [gutterSize]="'10px'">
-        <mat-grid-tile *ngFor='let item of items | async'>
-            <mat-card class="mat-card-custom">
-                <mat-card-subtitle>{{item.name | uppercase}}</mat-card-subtitle>
-                <mat-card-content>
-                    <img mat-card-image src="../../assets/chocolates.jpg">
-                </mat-card-content>
-                <mat-card-actions style="text-align: center;">
-                    <button mat-raised-button (click)="increaseQuantity(item.id)" *ngIf='item.quantity==0' style="width: 100%;">
-                        <mat-icon>add_shopping_cart</mat-icon>Add To Cart
-                    </button>
-                    <span *ngIf='item.quantity>0'>
-                        <button mat-icon-button (click)="increaseQuantity(item.id)">
-                            <mat-icon>add_circle_outline</mat-icon>
-                        </button>
-                        <span *ngIf='item.quantity>0'>{{item.quantity}} in Cart</span>
-                        <button mat-icon-button (click)="decreaseQuantity(item.id)">
-                            <mat-icon>remove_circle_outline</mat-icon>
-                        </button>
-                    </span>
-                </mat-card-actions>
-            </mat-card>
+<div id="products-container" class="container mx-auto px-4"
+    style="font-family: 'Space Grotesk', 'Poppins', sans-serif;">
+    <h2 id="products-title"
+        class="text-5xl font-display font-bold gradient-text glow-text mb-12 animate-slide-up text-center">Our Chocolate
+        Dreamz</h2>
 
-        </mat-grid-tile>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8" id="products-grid"
+        *ngIf="items | async as itemList">
+        <div *ngFor="let item of itemList; let i = index" [id]="'product-card-' + item.id"
+            [style.animation-delay]="(i * 0.05) + 's'" class="product-card group">
 
-    </mat-grid-list>
-    <br />
-    <div style="text-align: center;">
-        <button mat-raised-button color="basic" routerLink="/cart">Cart</button>
+            <!-- Mobile: Landscape/Horizontal Layout, Desktop: Vertical -->
+            <article class="flex sm:block">
+                <!-- Product Image -->
+                <div [id]="'product-image-' + item.id"
+                    class="w-32 h-32 sm:w-full sm:h-72 flex-shrink-0 relative overflow-hidden rounded-l-3xl sm:rounded-l-none sm:rounded-t-3xl bg-gradient-to-br {{getItemGradient(item.category)}}">
+                    <div class="absolute inset-0 flex items-center justify-center">
+                        <div [id]="'product-icon-' + item.id"
+                            class="text-5xl sm:text-9xl shake-on-hover sparkle-on-hover group-hover:scale-125 transition-transform duration-500">
+                            <span role="img" [attr.aria-label]="item.name + ' product image'">{{
+                                getItemEmoji(item.category) }}</span>
+                            <span class="sparkle-1" aria-hidden="true">✦</span>
+                            <span class="sparkle-2" aria-hidden="true">✦</span>
+                            <span class="sparkle-3" aria-hidden="true">✦</span>
+                        </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+
+                    <!-- Premium badge - only on specific items -->
+                    <div *ngIf="showPremiumBadge(item.id)" [id]="'premium-badge-' + item.id"
+                        class="absolute top-2 right-2 sm:top-4 sm:right-4 bg-gradient-to-r from-hot-pink to-neon-purple text-white px-2 py-1 sm:px-4 sm:py-2 rounded-full text-xs font-bold shadow-neon"
+                        role="status" aria-label="Premium product">
+                        PREMIUM
+                    </div>
+                </div>
+
+                <!-- Product Details -->
+                <div [id]="'product-details-' + item.id"
+                    class="flex-1 p-4 sm:p-6 space-y-2 sm:space-y-4 flex flex-col justify-center sm:justify-start">
+                    <h3 [id]="'product-name-' + item.id"
+                        class="text-lg sm:text-2xl font-bold gradient-text group-hover:glow-text transition-all">{{
+                        item.name | uppercase }}</h3>
+                    <p [id]="'product-price-' + item.id" class="text-2xl sm:text-4xl font-bold text-bright-pink">{{
+                        item.price | currency }}</p>
+
+                    <!-- Add to Cart / Quantity Controls -->
+                    <div *ngIf="item.quantity === 0" class="w-full">
+                        <button [id]="'add-to-cart-btn-' + item.id" (click)="increaseQuantity(item.id)"
+                            [attr.aria-label]="'Add ' + item.name + ' to cart'"
+                            class="w-full px-4 sm:px-8 py-3 sm:py-4 bg-white rounded-full font-bold overflow-hidden relative hover:scale-110 transition-all duration-300 shadow-lg hover:shadow-neon focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900">
+                            <span class="relative z-10 flex items-center justify-center space-x-2">
+                                <svg class="w-5 h-5 sm:w-6 sm:h-6 text-neon-purple" fill="none" stroke="currentColor"
+                                    viewBox="0 0 24 24" aria-hidden="true">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"
+                                        d="M12 4v16m8-8H4"></path>
+                                </svg>
+                                <span
+                                    class="bg-gradient-to-r from-neon-purple via-hot-pink to-vivid-purple bg-clip-text text-transparent font-extrabold text-sm sm:text-base">Add
+                                    to Dreamz</span>
+                            </span>
+                        </button>
+                    </div>
+
+                    <div *ngIf="item.quantity > 0" [id]="'quantity-controls-' + item.id"
+                        class="glass-card p-3 sm:p-4 flex items-center justify-between animate-scale-in" role="group"
+                        [attr.aria-label]="'Quantity controls for ' + item.name">
+                        <button [id]="'decrease-qty-btn-' + item.id" (click)="decreaseQuantity(item.id)"
+                            [attr.aria-label]="'Decrease quantity of ' + item.name"
+                            class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-neon-purple to-vivid-purple text-white shadow-neon hover:shadow-neon-strong transition-all duration-200 flex items-center justify-center font-bold text-xl sm:text-2xl hover:scale-125 hover:rotate-12 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900">
+                            −
+                        </button>
+                        <div class="text-center">
+                            <div [id]="'item-quantity-' + item.id" class="font-bold text-xl sm:text-2xl gradient-text"
+                                role="status" [attr.aria-live]="'polite'">
+                                {{ item.quantity }}</div>
+                            <div class="text-xs text-bright-pink">in cart</div>
+                        </div>
+                        <button [id]="'increase-qty-btn-' + item.id" (click)="increaseQuantity(item.id)"
+                            [attr.aria-label]="'Increase quantity of ' + item.name"
+                            class="w-11 h-11 sm:w-12 sm:h-12 rounded-full bg-gradient-to-r from-hot-pink to-neon-purple text-white shadow-neon hover:shadow-neon-strong transition-all duration-200 flex items-center justify-center font-bold text-xl sm:text-2xl hover:scale-125 hover:rotate-12 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900">
+                            +
+                        </button>
+                    </div>
+                </div>
+            </article>
+        </div>
+    </div>
+
+    <!-- Go to Cart Button -->
+    <div class="mt-16 text-center animate-fade-in">
+        <button id="view-cart-btn" routerLink="/cart" aria-label="View your shopping cart"
+            class="btn-neon text-xl px-16 py-6 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-purple-900">
+            <span class="relative z-10">✨ View Dream Cart ✨</span>
+        </button>
     </div>
 </div>
